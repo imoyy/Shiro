@@ -65,7 +65,7 @@ const TwoColumnLayout = ({
   return (
     <div
       className={clsxm(
-        'relative mx-auto block size-full min-w-0 max-w-[1800px] flex-col flex-wrap items-center lg:flex lg:flex-row',
+        'relative mx-auto size-full min-w-0 max-w-[1800px] flex-col flex-wrap items-center lg:flex lg:flex-row',
         className,
       )}
     >
@@ -102,6 +102,7 @@ const Hero = () => {
     title.template.reduce((acc, cur) => {
       return acc + (cur.text?.length || 0)
     }, 0) * 50
+
   return (
     <div className="mt-20 min-w-0 max-w-screen overflow-hidden lg:mt-[-4.5rem] lg:h-dvh lg:min-h-[800px]">
       <TwoColumnLayout leftContainerClassName="mt-[120px] lg:mt-0 h-[15rem] lg:h-1/2">
