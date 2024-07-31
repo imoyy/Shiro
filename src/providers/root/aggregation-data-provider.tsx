@@ -31,15 +31,14 @@ export const AggregationProvider: FC<
   })
 
   useEffect(() => {
-    if (!appConfig) return
-    jotaiStore.set(appConfigAtom, appConfig)
-  }, [appConfig])
-
-  useEffect(() => {
     if (!aggregationData) return
     jotaiStore.set(aggregationDataAtom, aggregationData)
     setWebUrl(aggregationData.url.webUrl)
   }, [aggregationData])
+  useEffect(() => {
+    if (!appConfig) return
+    jotaiStore.set(appConfigAtom, appConfig)
+  }, [appConfig])
 
   const callOnceRef = useRef(false)
 

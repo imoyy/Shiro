@@ -7,6 +7,7 @@ import createClient, { allControllers } from '@mx-space/api-client'
 import { API_URL } from '~/constants/env'
 
 type FetchType = typeof $fetch
+
 export const createFetchAdapter = (
   $fetch: FetchType,
 ): IRequestAdapter<typeof $fetch> => ({
@@ -51,6 +52,7 @@ export const createFetchAdapter = (
     })
   },
 })
+
 export const createApiClient = (
   fetchAdapter: ReturnType<typeof createFetchAdapter>,
 ) =>
