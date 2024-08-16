@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react'
 import { atom, useStore } from 'jotai'
-import { Drawer } from 'vaul'
 import type { FC, PropsWithChildren, ReactNode } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { Drawer } from 'vaul'
 
 import { SheetContext } from './context'
 
@@ -74,7 +74,7 @@ export const PresentSheet: FC<PropsWithChildren<PresentSheetProps>> = (
     }
   }, [holderRef, store])
 
-  const Root = Drawer.Root
+  const { Root } = Drawer
 
   const overlayZIndex = zIndex - 1
   const contentZIndex = zIndex

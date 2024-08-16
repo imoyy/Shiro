@@ -1,6 +1,3 @@
-import { queryClient } from '~/providers/root/react-query-provider'
-import React from 'react'
-import { produce } from 'immer'
 import type {
   CommentModel,
   NoteModel,
@@ -11,8 +8,9 @@ import type {
 } from '@mx-space/api-client'
 import type { BusinessEvents } from '@mx-space/webhook'
 import type { InfiniteData } from '@tanstack/react-query'
-import type { ActivityPresence } from '~/models/activity'
+import { produce } from 'immer'
 import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import React from 'react'
 
 import { setOnlineCount } from '~/atoms'
 import {
@@ -32,6 +30,7 @@ import { TrackerAction } from '~/constants/tracker'
 import { isDev } from '~/lib/env'
 import { routeBuilder, Routes } from '~/lib/route-builder'
 import { toast } from '~/lib/toast'
+import type { ActivityPresence } from '~/models/activity'
 import {
   getCurrentNoteData,
   setCurrentNoteData,
@@ -44,6 +43,7 @@ import {
   getGlobalCurrentPostData,
   setGlobalCurrentPostData,
 } from '~/providers/post/CurrentPostDataProvider'
+import { queryClient } from '~/providers/root/react-query-provider'
 import { queries } from '~/queries/definition'
 import { buildCommentsQueryKey } from '~/queries/keys'
 import { EventTypes } from '~/types/events'
@@ -102,16 +102,15 @@ export const eventHandler = (
       const post = data as PostModel
       if (
         location.pathname ===
-        routeBuilder(Routes.Post, {
-          category: post.category.slug,
-          slug: post.slug,
-        })
+          routeBuilder(Routes.Post, {
+            category: post.category.slug,
+            slug: post.slug,
+          }) &&
+        getGlobalCurrentPostData()?.id === post.id
       ) {
-        if (getGlobalCurrentPostData()?.id === post.id) {
-          router.replace(routeBuilder(Routes.PageDeletd, {}))
-          toast.error('文章已删除')
-          trackerRealtimeEvent()
-        }
+        router.replace(routeBuilder(Routes.PageDeletd, {}))
+        toast.error('文章已删除')
+        trackerRealtimeEvent()
       }
 
       break
@@ -143,15 +142,14 @@ export const eventHandler = (
       const note = data as NoteModel
       if (
         location.pathname ===
-        routeBuilder(Routes.Note, {
-          id: note.id,
-        })
+          routeBuilder(Routes.Note, {
+            id: note.id,
+          }) &&
+        getCurrentNoteData()?.data.id === note.id
       ) {
-        if (getCurrentNoteData()?.data.id === note.id) {
-          router.replace(routeBuilder(Routes.PageDeletd, {}))
-          toast.error('手记已删除')
-          trackerRealtimeEvent()
-        }
+        router.replace(routeBuilder(Routes.PageDeletd, {}))
+        toast.error('手记已删除')
+        trackerRealtimeEvent()
       }
 
       break
@@ -239,7 +237,7 @@ export const eventHandler = (
 
     case EventTypes.ACTIVITY_UPDATE_PRESENCE: {
       const payload = data as ActivityPresence
-      const queryKey = queries.activity.presence(payload.roomName).queryKey
+      const { queryKey } = queries.activity.presence(payload.roomName)
       const queryState = queryClient.getQueryState(queryKey)
       queryClient.cancelQueries({
         queryKey,
@@ -347,7 +345,6 @@ export const eventHandler = (
 
     default: {
       if (isDev) {
-        // eslint-disable-next-line no-console
         console.info(type, data)
       }
     }

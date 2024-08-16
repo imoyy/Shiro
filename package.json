@@ -1,62 +1,45 @@
 {
   "name": "Shiro",
-  "license": "AGPL-3.0",
-  "private": false,
   "version": "1.1.5",
+  "private": false,
+  "packageManager": "pnpm@9.7.0",
+  "license": "AGPL-3.0",
   "engines": {
     "node": ">=18"
   },
-  "bump": {
-    "before": [
-      "git pull --rebase",
-      "ni"
-    ],
-    "changelog": true
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm exec lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "prettier --ignore-path ./.gitignore --write "
-    ],
-    "*.{js,ts,cjs,mjs,jsx,tsx,json}": [
-      "biome lint --apply --no-errors-on-unmatched"
-    ]
-  },
   "scripts": {
-    "prepare": "pnpm exec simple-git-hooks && test -f .env || cp .env.template .env",
-    "start": "npm run dev",
-    "prebuild": "rimraf .next || exit 0",
-    "dev": "cross-env NODE_ENV=development next dev -p 2323",
-    "dev:turbo": "cross-env NODE_ENV=development next dev -p 2323 --turbo",
     "analyze": "cross-env NODE_ENV=production ANALYZE=true BUNDLE_ANALYZE=browser next build",
     "build": "cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 next build",
     "build:ci": "cross-env NODE_ENV=production NODE_OPTIONS=--max_old_space_size=4096 NEXT_TELEMETRY_DISABLED=1 CI=true next build",
-    "lint": "biome lint --apply src/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json} --no-errors-on-unmatched",
+    "dev": "cross-env NODE_ENV=development next dev -p 2323",
+    "dev:turbo": "cross-env NODE_ENV=development next dev -p 2323 --turbo",
+    "lint": "eslint --fix",
+    "prebuild": "rimraf .next || exit 0",
+    "prepare": "pnpm exec simple-git-hooks && test -f .env || cp .env.template .env",
     "prod:pm2": "cross-env NODE_ENV=production pm2 restart ecosystem.config.cjs",
+    "prod:reload": "pm2 reload ecosystem.config.cjs",
     "prod:stop": "pm2 stop ecosystem.config.cjs",
-    "prod:reload": "pm2 reload ecosystem.config.cjs"
+    "start": "npm run dev"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.620.0",
-    "@clerk/nextjs": "5.2.8",
-    "@clerk/themes": "2.1.14",
+    "@aws-sdk/client-s3": "3.627.0",
+    "@clerk/nextjs": "5.3.0",
+    "@clerk/themes": "2.1.19",
     "@excalidraw/excalidraw": "0.17.6",
     "@floating-ui/react-dom": "2.1.1",
-    "@milkdown/core": "7.4.0",
-    "@milkdown/ctx": "7.4.0",
-    "@milkdown/plugin-clipboard": "7.4.0",
-    "@milkdown/plugin-diagram": "^7.4.0",
-    "@milkdown/plugin-history": "7.4.0",
-    "@milkdown/plugin-indent": "7.4.0",
-    "@milkdown/plugin-listener": "7.4.0",
-    "@milkdown/preset-commonmark": "7.4.0",
-    "@milkdown/preset-gfm": "7.4.0",
-    "@milkdown/prose": "7.4.0",
-    "@milkdown/react": "7.4.0",
-    "@milkdown/transformer": "7.4.0",
-    "@milkdown/utils": "7.4.0",
+    "@milkdown/core": "7.5.0",
+    "@milkdown/ctx": "7.5.0",
+    "@milkdown/plugin-clipboard": "7.5.0",
+    "@milkdown/plugin-diagram": "^7.5.0",
+    "@milkdown/plugin-history": "7.5.0",
+    "@milkdown/plugin-indent": "7.5.0",
+    "@milkdown/plugin-listener": "7.5.0",
+    "@milkdown/preset-commonmark": "7.5.0",
+    "@milkdown/preset-gfm": "7.5.0",
+    "@milkdown/prose": "7.5.0",
+    "@milkdown/react": "7.5.0",
+    "@milkdown/transformer": "7.5.0",
+    "@milkdown/utils": "7.5.0",
     "@mx-space/api-client": "1.13.1",
     "@prosemirror-adapter/react": "0.2.6",
     "@radix-ui/react-dialog": "1.1.1",
@@ -65,17 +48,17 @@
     "@radix-ui/react-select": "2.1.1",
     "@radix-ui/react-switch": "1.1.0",
     "@radix-ui/react-tabs": "1.1.0",
-    "@shikijs/transformers": "1.12.0",
+    "@shikijs/transformers": "1.12.1",
     "@shiro/fetch": "link:./packages/fetch",
-    "@tanstack/query-async-storage-persister": "5.51.15",
-    "@tanstack/react-query": "5.51.15",
-    "@tanstack/react-query-devtools": "5.51.15",
-    "@tanstack/react-query-persist-client": "5.51.15",
-    "@upstash/redis": "1.33.0",
+    "@tanstack/query-async-storage-persister": "5.51.21",
+    "@tanstack/react-query": "5.51.23",
+    "@tanstack/react-query-devtools": "5.51.23",
+    "@tanstack/react-query-persist-client": "5.51.23",
+    "@upstash/redis": "1.34.0",
     "@vercel/analytics": "1.3.1",
     "@vercel/postgres": "0.9.0",
     "bypass-vue-devtools": "0.0.6",
-    "chroma-js": "2.4.2",
+    "chroma-js": "2.6.0",
     "clsx": "2.1.1",
     "colorjs.io": "^0.5.2",
     "crossbell": "1.12.0",
@@ -89,7 +72,7 @@
     "idb-keyval": "6.2.1",
     "immer": "^10.1.1",
     "jojoo": "0.1.4",
-    "jotai": "2.9.1",
+    "jotai": "2.9.2",
     "js-cookie": "3.0.5",
     "js-yaml": "4.1.0",
     "jsondiffpatch": "^0.6.0",
@@ -97,7 +80,7 @@
     "kbar": "0.1.0-beta.45",
     "markdown-escape": "2.0.0",
     "markdown-to-jsx": "npm:@innei/markdown-to-jsx@7.4.5-fork.4",
-    "marked": "13.0.2",
+    "marked": "14.0.0",
     "medium-zoom": "1.1.0",
     "mermaid": "10.9.1",
     "nanoid": "^5.0.7",
@@ -105,7 +88,7 @@
     "next-runtime-env": "3.2.2",
     "next-themes": "0.3.0",
     "ofetch": "1.3.4",
-    "openai": "4.53.2",
+    "openai": "4.55.5",
     "pngjs": "7.0.0",
     "prop-types": "15.8.1",
     "qrcode.react": "3.1.0",
@@ -117,7 +100,7 @@
     "react-toastify": "10.0.5",
     "react-tweet": "3.2.1",
     "remark-directive": "3.0.0",
-    "remove-markdown": "0.5.0",
+    "remove-markdown": "0.5.2",
     "rss": "1.2.2",
     "server-only": "^0.0.1",
     "socket.io-client": "4.7.5",
@@ -131,58 +114,51 @@
     "xss": "1.0.15"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
-    "@iconify-json/material-symbols": "1.1.85",
-    "@iconify-json/mingcute": "1.1.18",
-    "@iconify/tailwind": "1.1.1",
-    "@innei/prettier": "0.14.0",
+    "@iconify-json/material-symbols": "1.1.87",
+    "@iconify-json/mingcute": "1.1.19",
+    "@iconify/tailwind": "1.1.2",
+    "@innei/prettier": "0.15.0",
     "@mx-space/webhook": "0.3.0",
     "@next/bundle-analyzer": "14.2.5",
     "@tailwindcss/container-queries": "0.1.1",
-    "@tailwindcss/typography": "0.5.13",
+    "@tailwindcss/typography": "0.5.14",
     "@types/chroma-js": "2.4.4",
     "@types/js-cookie": "3.0.6",
     "@types/js-yaml": "4.0.9",
     "@types/katex": "^0.16.7",
     "@types/markdown-escape": "1.1.3",
-    "@types/node": "20.14.12",
+    "@types/node": "20.14.15",
     "@types/pngjs": "6.0.5",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "@types/react-responsive-masonry": "2.1.3",
     "@types/remove-markdown": "0.3.4",
     "@types/rss": "0.0.32",
-    "autoprefixer": "10.4.19",
+    "autoprefixer": "10.4.20",
     "client-only": "0.0.1",
     "code-inspector-plugin": "0.15.2",
     "cross-env": "7.0.3",
     "dotenv": "16.4.5",
-    "lint-staged": "15.2.7",
-    "postcss": "8.4.40",
+    "eslint": "9.9.0",
+    "eslint-config-hyoban": "3.1.2",
+    "lint-staged": "15.2.8",
+    "postcss": "8.4.41",
     "postcss-import": "16.1.0",
     "postcss-js": "4.0.1",
     "postcss-nested": "6.2.0",
     "postcss-preset-env": "9.6.0",
     "postcss-prune-var": "1.1.2",
     "prettier": "3.3.3",
-    "rimraf": "5.0.9",
-    "shiki": "1.12.0",
+    "rimraf": "5.0.10",
+    "shiki": "1.12.1",
     "simple-git-hooks": "2.11.1",
     "tailwind-scrollbar": "3.1.0",
     "tailwind-variants": "0.2.1",
-    "tailwindcss": "^3.4.7",
+    "tailwindcss": "^3.4.9",
     "tailwindcss-animated": "1.1.2",
     "typescript": "5.5.4",
     "zx": "8.1.4"
   },
-  "nextBundleAnalysis": {
-    "budget": 358400,
-    "budgetPercentIncreaseRed": 20,
-    "showDetails": true
-  },
-  "browserslist": [
-    "defaults and fully supports es6-module"
-  ],
   "pnpm": {
     "overrides": {
       "array-includes": "npm:@nolyfill/array-includes@latest",
@@ -200,5 +176,30 @@
       "string.prototype.matchall": "npm:@nolyfill/string.prototype.matchall@latest"
     }
   },
-  "packageManager": "pnpm@9.6.0"
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --ignore-path ./.gitignore --write "
+    ],
+    "*.{js,ts,cjs,mjs,jsx,tsx,json}": [
+      "eslint --fix"
+    ]
+  },
+  "bump": {
+    "before": [
+      "git pull --rebase",
+      "ni"
+    ],
+    "changelog": true
+  },
+  "nextBundleAnalysis": {
+    "budget": 358400,
+    "budgetPercentIncreaseRed": 20,
+    "showDetails": true
+  },
+  "browserslist": [
+    "defaults and fully supports es6-module"
+  ]
 }

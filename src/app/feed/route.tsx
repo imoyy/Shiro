@@ -1,7 +1,7 @@
+import type { MarkdownToJSX } from 'markdown-to-jsx'
 import { compiler } from 'markdown-to-jsx'
 import RSS from 'rss'
 import xss from 'xss'
-import type { MarkdownToJSX } from 'markdown-to-jsx'
 
 import { CDN_HOST } from '~/app.static.config'
 import { AlertsRule as __AlertsRule } from '~/components/ui/markdown/parsers/alert'
@@ -80,10 +80,8 @@ export async function GET() {
                 Tab: NotSupportRender,
 
                 img: ({ src, alt }) => {
-                  if (src) {
-                    if (new URL(src).hostname === CDN_HOST) {
-                      return <span>此图片不支持在 RSS Render 中查看。</span>
-                    }
+                  if (src && new URL(src).hostname === CDN_HOST) {
+                    return <span>此图片不支持在 RSS Render 中查看。</span>
                   }
                   return <img src={src} alt={alt} />
                 },

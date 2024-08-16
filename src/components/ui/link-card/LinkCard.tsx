@@ -1,13 +1,12 @@
-import { useCallback, useMemo, useState } from 'react'
-import { useInView } from 'react-intersection-observer'
+import { simpleCamelcaseKeys as camelcaseKeys } from '@mx-space/api-client'
 import { m, useMotionTemplate, useMotionValue } from 'framer-motion'
 import Link from 'next/link'
-import RemoveMarkdown from 'remove-markdown'
-import uniqolor from 'uniqolor'
 import type React from 'react'
 import type { FC, ReactNode, SyntheticEvent } from 'react'
-
-import { simpleCamelcaseKeys as camelcaseKeys } from '@mx-space/api-client'
+import { useCallback, useMemo, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
+import RemoveMarkdown from 'remove-markdown'
+import uniqolor from 'uniqolor'
 
 import { LazyLoad } from '~/components/common/Lazyload'
 import { MingcuteStarHalfFill } from '~/components/icons/star'
@@ -117,7 +116,7 @@ const LinkCardImpl: FC<LinkCardProps> = (props) => {
     setLoading(true)
 
     await fetchFn(id, setCardInfo, setFullUrl).catch((err) => {
-      console.error('fetch card info error: ', err)
+      console.error('fetch card info error:', err)
       setIsError(true)
     })
     setLoading(false)
@@ -142,7 +141,7 @@ const LinkCardImpl: FC<LinkCardProps> = (props) => {
       const bounds = currentTarget.getBoundingClientRect()
       mouseX.set(clientX - bounds.left)
       mouseY.set(clientY - bounds.top)
-      radius.set(Math.sqrt(bounds.width ** 2 + bounds.height ** 2) * 1.3)
+      radius.set(Math.hypot(bounds.width, bounds.height) * 1.3)
     },
     [mouseX, mouseY, radius],
   )
